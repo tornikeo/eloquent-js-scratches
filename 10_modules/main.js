@@ -77,6 +77,12 @@
 // Exercise
 
 import djk from "dijkstrajs"
+const x = require("dijkstrajs")
 const {find_path} = djk;
 console.log(find_path);
 
+function a() {
+    return a
+}
+
+console.log(a(a())()()()());
