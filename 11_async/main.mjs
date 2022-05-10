@@ -64,7 +64,7 @@
 //             Promise.resolve(handler(nest, content, source))
 //                 .then(response => callback)
 //         } catch (error) {
-            
+
 //         }
 //     })
 // }
@@ -86,29 +86,76 @@
 //     (fail) => {
 //         console.log('Failure: ', fail);
 //     })
-let laziness = "laziness";
-class LazinessError extends Error {};
+// let laziness = "laziness";
+// class LazinessError extends Error {};
 
-let promiseToWorkHard = new Promise((resolve, reject) => {
-    //do hard work
-    // let hardWork = "hard work";
-    // setTimeout(() => resolve(hardWork), 250)
-    //lazy and fail
-    try {
-        throw new LazinessError("I'm too lazy!")
-    } catch (error) {
-        if (error instanceof LazinessError) {
-            reject('Too lazy')
-        }
-    }
-})
+// let promiseToWorkHard = new Promise((resolve, reject) => {
+//     //do hard work
+//     // let hardWork = "hard work";
+//     // setTimeout(() => resolve(hardWork), 250)
+//     //lazy and fail
+//     try {
+//         throw new LazinessError("I'm too lazy!")
+//     } catch (error) {
+//         if (error instanceof LazinessError) {
+//             reject('Too lazy')
+//         }
+//     }
+// })
 
-promiseToWorkHard.then(
-    results => {
-        console.log("Got", results, "results" );
-    }, 
-    fails => {
-        console.log("Failed with", fails, "results" );
-    })
+// promiseToWorkHard.then(
+//     results => {
+//         console.log("Got", results, "results" );
+//     }, 
+//     fails => {
+//         console.log("Failed with", fails, "results" );
+//     })
 
-console.log("Jell-O");
+// console.log("Jell-O");
+
+
+function Promise_all(promises) {
+    return new Promise((resolve, reject) => {
+        let results = [];
+        let count = promises.length;
+        // promises.map(
+        //     (promise,index) => promise.then(
+        //         (result) => {
+        //             results[index] = result;
+        //             count
+        //         }
+        //     )
+        // )
+
+        results = promises.reduce((pval,cval,cindex) => {
+            cval.then(pval.append).catch(console.log)
+        }, [])
+
+        resolve(results)
+        // for(let promise of promises) {
+        //     promise.then()
+        // }
+    });
+  }
+  
+  // Test code.
+  Promise_all([]).then(array => {
+    console.log("This should be []:", array);
+  });
+  function soon(val) {
+    return new Promise(resolve => {
+      setTimeout(() => resolve(val), Math.random() * 500);
+    });
+  }
+  Promise_all([soon(1), soon(2), soon(3)]).then(array => {
+    console.log("This should be [1, 2, 3]:", array);
+  });
+//   Promise_all([soon(1), Promise.reject("X"), soon(3)])
+//     .then(array => {
+//       console.log("We should not get here");
+//     })
+//     .catch(error => {
+//       if (error != "X") {
+//         console.log("Unexpected failure:", error);
+//       }
+//     });
