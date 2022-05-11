@@ -1,5 +1,5 @@
 "use-strict";
-console.log('Hello');
+// console.log('Hello');
 // do(define(x, 10),
 //    if(>(x, 5),
 //       print("large"),
@@ -60,7 +60,7 @@ function parseExpression(program) {
   }
 
 
-  console.log(parse("+(a, 10)"));
+  // console.log(parse("+(a, 10)"));
 
   const specialForms = Object.create(null);
 
@@ -89,3 +89,155 @@ function parseExpression(program) {
       }
     }
   }
+
+  specialForms.if = (args, scope) => {
+    if (args.length != 3) {
+      throw new SyntaxError('Wrong number of args to IF need 3, have ' + args.length)
+    } else if (evaluate(args[0], scope) !== false) { // is truthy
+      return evaluate(args[1], scope);
+    } else { //is falsy
+      return evaluate(args[2], scope);
+    }
+  } // if is special form since we don't want to eval
+    // args beforehand. That's a requirement for func.
+
+  specialForms.while = (args, scope) => {
+    if (args.length != 2) {
+      throw new SyntaxError('Wrong number of args to WHILE need 2, have ' + args.length)
+    } 
+    while (evaluate(args[0], scope) !== false) { // is truthy
+      evaluate(args[1], scope);
+    }
+    return false;
+  }
+
+  const assert_args_len = (args, len, cmd) => {
+    if (args.length != len) {
+      throw new SyntaxError(`Wrong number of args to ${cmd} need ${len}, have ${args.length}`)
+    } 
+  }
+  
+  specialForms.do = (args, scope) => {
+    let value = false;
+    for(let arg of args) {
+      value = evaluate(arg, scope)
+    }
+    return value;
+  }
+
+  specialForms.define = (args, scope) => {
+    assert_args_len(args, 2, 'define')
+    if (args[0].type !== 'word') {
+      throw new SyntaxError(`Bad use of define, arg[0] is ${arg[0].type} should be 'word'`)
+    }
+    let value = evaluate(args[1],scope);
+    scope[args[0].name] = value;
+    return value;
+  }
+
+
+  const topScope = Object.create(null);
+  topScope.true = true;
+  topScope.false = false;
+
+  let prog = parse(`if(true, false, true)`)
+  // console.log(evaluate(prog, topScope));
+
+  for (const op of ["+","-","*","/","==","<",">"]) {
+    topScope[op] = Function('a,b', `return a ${op} b;`);
+  }
+
+  topScope.print = value => {
+    console.log(value);
+    return value;
+  }
+
+function run(program) {
+  return evaluate(parse(program), Object.create(topScope))
+}
+
+// run(`
+// do(define(total, 0),
+//    define(count, 1),
+//    while(<(count, 11),
+//          do(define(total, +(total, count)),
+//             define(count, +(count, 1)))),
+//    print(total))
+// `);
+
+specialForms.fun = (args, scope) => {
+  if (!args.length) {
+    throw new SyntaxError('Function needs a body');
+  }
+  let body = args[args.length - 1];
+  let params = args.slice(0, args.length - 1).map(
+    (expr,index) => {
+      if (expr.type != 'word') {
+        throw new SyntaxError(`Parameter ${index} must be of type word, is ${expr.type}.`)
+      }
+      return expr.name;
+    }
+  );
+
+  return function() {
+    if (arguments.length != params.length) {
+      throw new TypeError("Wrong number of arguments");
+    }
+
+    let localScope = Object.create(scope);
+    for (let i = 0; i < arguments.length; i++) {
+      localScope[params[i]] = arguments[i]
+    }
+    return evaluate(body, localScope);
+  }
+}
+
+
+// run(`
+// do(define(plusOne, fun(a, +(a, 1))),
+//    print(plusOne(10)))
+// `);
+
+// run(`
+// do(
+//   define(fib, fun(n, 
+//     if(<(n,1), 
+//       1,
+//       +(fib(-(n,2)), fib(-(n,1)) )
+//     )
+//   )),
+//   print(fib(3))
+// )
+// `);
+
+
+topScope.array = (...args) => {
+  let scope;
+  [args,scope] = [args.slice(0,-1),args.slice(-1)];
+  let value = [];
+  console.log(args);
+  for(let arg of args) {
+    value.push( evaluate(arg, scope) );
+  }
+  return value;
+};
+
+topScope.length = (args, scope) => {
+  return args[0].length;
+};
+
+topScope.element = (args, scope) => {
+  assert_args_len(args, 2, 'element')
+  return args[0][Number(args[1])];
+};
+
+run(`
+do(define(sum, fun(array,
+     do(define(i, 0),
+        define(sum, 0),
+        while(<(i, length(array)),
+          do(define(sum, +(sum, element(array, i))),
+             define(i, +(i, 1)))),
+        sum))),
+   print(sum(array(1, 2, 3))))
+`);
