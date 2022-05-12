@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -8,10 +9,139 @@
     <script type="module" src='main.mjs'></script>
     <!-- <script src='main.mjs'></script> -->
 </head>
+
 <body>
-    <h1>My home page</h1>
+    <!-- <h1>My home page</h1>
     <p>Hello world</p>
     <p>I wrote a book!</p>
-<button onclick="alert('BOOM!');">DO NOT PRESS</button>
+    <button onclick="alert('BOOM!');">DO NOT PRESS</button>
+    <p>My ostrich Gertrude:</p>
+    <p><img id="gertrude" src="https://nationalzoo.si.edu/sites/default/files/styles/980_scale/public/ostrich-head-close-up_gm_20220212.jpg"></p> -->
+
+    <!-- <p>One</p>
+    <p>Two</p>
+    <p>Three</p> -->
+
+    <!-- <p>The <img src="img/cat.jpg" width="50px" alt="Cat"> in the
+        <img src="img/hat.jpg" width="50px" alt="Hat">.</p>
+
+    
+    <p><button onclick="replaceImages()">Replace</button></p>
+    
+    <script>
+    // let ostrich = document.getElementById("gertrude");
+    // console.log(ostrich.src);
+    // let paragraphs = document.getElementsByTagName("p");
+    // document.body.insertBefore(paragraphs[2], paragraphs[1]);
+    function replaceImages() {
+    let images = document.body.getElementsByTagName("img");
+    for (let i = images.length - 1; i >= 0; i--) {
+      let image = images[i];
+      if (image.alt) {
+        let text = document.createTextNode(image.alt);
+        image.parentNode.replaceChild(text, image);
+      }
+    }
+  }
+    </script> -->
+    <!-- <blockquote id="quote">
+        No book can ever be finished. While working on it we learn
+        just enough to find it immature the moment we turn away
+        from it.
+      </blockquote>
+      
+      <script>
+        function elt(type, ...children) {
+          let node = document.createElement(type);
+          for (let child of children) {
+            if (typeof child != "string") node.appendChild(child);
+            else node.appendChild(document.createTextNode(child));
+          }
+          return node;
+        }
+      
+        document.getElementById("quote").appendChild(
+          elt("footer", "—",
+              elt("strong", "Karl Popper"),
+              ", preface to the second edition of ",
+              elt("em", "The Open Society and Its Enemies"),
+              ", 1950"));
+      </script> -->
+
+    <!-- <p data-classified="secret">The launch code is 00000000.</p>
+    <p data-classified="unclassified">I have two feet.</p>
+    <script>
+        let paras = document.getElementsByTagName('p')
+        for (const para of paras) {
+            if (para.getAttribute('data-classified') == 'secret') {
+                para.remove()
+            }
+        }w
+    </script> -->
+    <!-- <p style="border: 3px solid red">
+        I'm boxed in
+    </p>
+
+    <script>
+        let para = document.getElementsByTagName('p')[0];
+        console.log(para.clientHeight, para.clientWidth);
+        console.log(para.getBoundingClientRect());
+    </script> -->
+
+    <!-- <p id="para" style="color: purple">
+        Nice text
+    </p>
+      
+    <script>
+        let para = document.getElementById("para");
+        console.log(para.style.color);
+        para.style.color = "magenta";
+    </script> -->
+
+    <!-- The notation p > a {…} applies the given styles to all <a> tags that are direct children of <p> tags. Similarly, p a {…} applies to all <a> tags inside <p> tags, whether they are direct or indirect children. -->
+
+    <!-- <style>
+        strong {
+          font-style: italic;
+          color: gray;
+        }
+    </style>
+    <p>Now <strong>strong text</strong> is italic and gray.</p> -->
+
+    <!-- <p>And if you go chasing <span class="animal">rabbits</span></p>
+    <p>and you know you're going to fail</p>
+    <p>Tell 'em a <span class="character">hookas smoking <span class="animal">caterpillar</span></span></p>
+    <p>Has given you the call</p>
+    <script>
+        function count(selector) {
+            return document.querySelectorAll(selector)
+        }
+        console.log(Array.from(count('p')));
+        console.log(count('.animal'));
+        console.log(count('p .animal'));
+        console.log(count('p > .animal'));
+    </script> -->
+
+    <!-- The position style property influences layout in a powerful way. By default it has a value of static, meaning the element sits in its normal place in the document. When it is set to relative, the element still takes up space in the document, but now the top and left style properties can be used to move it relative to that normal place. When position is set to absolute, the element is removed from the normal document flow—that is, it no longer takes up space and may overlap with other elements. Also, its top and left properties can be used to absolutely position it relative to the top-left corner of the nearest enclosing element whose position property isn’t static, or relative to the document if no such enclosing element exists. -->
+
+    <p style="text-align: center">
+        <img src="img/cat.jpg" style="position: relative; width: 400px">
+    </p>
+
+
+<script>
+    let cat = document.querySelector("img");
+    let angle = Math.PI / 2;
+    function animate(time, lastTime) {
+      if (lastTime != null) {
+        angle += (time - lastTime) * 0.001;
+      }
+      cat.style.top = (Math.sin(angle) * 20) + "px";
+      cat.style.left = (Math.cos(angle) * 200) + "px";
+      requestAnimationFrame(newTime => animate(newTime, time));
+    }
+    requestAnimationFrame(animate);
+  </script>
 </body>
+
 </html>

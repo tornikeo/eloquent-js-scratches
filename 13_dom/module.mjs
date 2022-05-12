@@ -29,3 +29,5 @@ function talksAbout(node, word) {
 // console.log(talksAbout(document.body, "book"));
 // console.log(talksAbout(document.body, "dragons"));
 
+// let link = document.body.getElementsByTagName('a')[0]
+// console.log(link.href);
