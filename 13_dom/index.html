@@ -123,25 +123,67 @@
     </script> -->
 
     <!-- The position style property influences layout in a powerful way. By default it has a value of static, meaning the element sits in its normal place in the document. When it is set to relative, the element still takes up space in the document, but now the top and left style properties can be used to move it relative to that normal place. When position is set to absolute, the element is removed from the normal document flow—that is, it no longer takes up space and may overlap with other elements. Also, its top and left properties can be used to absolutely position it relative to the top-left corner of the nearest enclosing element whose position property isn’t static, or relative to the document if no such enclosing element exists. -->
-
-    <p style="text-align: center">
+    <!-- 
+        position: static is default. 
+        relative means it takes up space, but you can move it around with top & left
+            relative to that normal space.
+        absolute: relative to 0,0, top left of screen. Doesn't take up any space (doesn't push other stuff around).
+     -->
+    <!-- <p style="text-align: center">
         <img src="img/cat.jpg" style="position: relative; width: 400px">
+        <img src="img/hat.jpg" style="position: relative; width: 400px">
     </p>
 
 
-<script>
-    let cat = document.querySelector("img");
-    let angle = Math.PI / 2;
-    function animate(time, lastTime) {
-      if (lastTime != null) {
-        angle += (time - lastTime) * 0.001;
-      }
-      cat.style.top = (Math.sin(angle) * 20) + "px";
-      cat.style.left = (Math.cos(angle) * 200) + "px";
-      requestAnimationFrame(newTime => animate(newTime, time));
+    <script>
+        let cat = document.querySelector("img");
+        let angle = Math.PI / 2;
+        function animate(time, lastTime) {
+            if (lastTime != null) {
+                angle += (time - lastTime) * 0.01;
+            }
+            cat.style.top = (Math.sin(angle) * 200) + "px";
+            cat.style.left = (Math.cos(angle) * 200) + "px";
+            cat.style.width = (Math.cos(angle) ** 2 * 50) + "px";
+            requestAnimationFrame(newTime => animate(newTime, time));
+        }
+        requestAnimationFrame(animate);
+    </script> -->
+    <h1>Mountains</h1>
+
+    <div id="mountains"></div>
+    
+    <script>
+      const MOUNTAINS = [
+        {name: "Kilimanjaro", height: 5895, place: "Tanzania"},
+        {name: "Everest", height: 8848, place: "Nepal"},
+        {name: "Mount Fuji", height: 3776, place: "Japan"},
+        {name: "Vaalserberg", height: 323, place: "Netherlands"},
+        {name: "Denali", height: 6168, place: "United States"},
+        {name: "Popocatepetl", height: 5465, place: "Mexico"},
+        {name: "Mont Blanc", height: 4808, place: "Italy/France"}
+      ];
+    let div = document.getElementById('mountains')
+    let table = document.createElement('table')
+    div.appendChild(table)
+    let tr = document.createElement('tr', )
+    for (const key of Object.keys(MOUNTAINS[0])) {
+        let th = document.createElement('th')
+        th.appendChild(document.createTextNode(key))
+        tr.appendChild(th)
     }
-    requestAnimationFrame(animate);
-  </script>
+    table.appendChild(tr)
+
+    for (const entry of MOUNTAINS) {
+        tr = document.createElement('tr')
+        for (const [key,val] of Object.entries(entry)) {
+            let td = document.createElement('td')
+            td.appendChild(document.createTextNode(val))
+            tr.appendChild(td)
+        }
+        table.appendChild(tr)   
+    }
+    </script>
 </body>
 
 </html>
