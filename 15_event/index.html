@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script type="module" src='main.mjs'></script>
+    <!-- <script src='main.mjs'></script> -->
+</head>
+
+<body>
+    <!-- <button>Click meh!</button>
+
+    <script>
+        let button = document.querySelector('button');
+        button.addEventListener(
+            'mousedown', e => {
+                console.log(e, e.screenX);
+            }
+        )
+    </script> -->
+
+    <!-- <p>A paragraph with a <button>button</button>.</p>
+    <script>
+        let para = document.querySelector("p");
+        let button = document.querySelector("button");
+        para.addEventListener("click", () => {
+            console.log("Handler for paragraph.");
+        });
+        button.addEventListener("mousedown", event => {
+            console.log("Handler for button.");
+            if (event.button == 2) event.stopPropagation();
+        });
+    </script> -->
+
+    <!-- <button>A</button>
+    <button>B</button>
+    <button>C</button> -->
+    <!-- <a href="https://developer.mozilla.org/">MDN</a>
+    <script>
+        let link = document.querySelector('a');
+            console.log(link);
+            link.addEventListener('click', e => {
+                console.log('Nope.');
+                e.preventDefault();
+        })
+        // document.body.addEventListener("click", e => {
+        //     // console.log(event.target.nodeName == "BUTTON");
+        //     // if (event.target.nodeName === 'BUTTON') {
+        //     //     console.log('Clicked', event.target.textContent);
+        //     // }
+        // })
+    </script> -->
+
+    <!-- <p>Change the color of the text with keys!</p>
+    <p>Press ctrl-space to delete this!</p>
+    <script>
+        let p = document.querySelectorAll('p')[0];
+        let p1 = document.querySelectorAll('p')[1];
+        window.addEventListener('keydown', e => {
+            console.log(e);
+            p.style.background = 'green';
+            e.preventDefault()
+        })
+
+        window.addEventListener('keyup', e => {
+            p.style.background = 'blue';
+            e.preventDefault()
+        })
+
+        window.addEventListener('keydown', e => {
+            if (e.key == ' ' && e.ctrlKey) {
+                p1.hidden = true;
+            }
+        })
+    </script> -->
+    <style>
+        .dot {
+            height: 8px;
+            width: 8px;
+            background: black;
+            position: absolute;
+        }
+    </style>
+    <script>
+        function moved(e) {
+            let dot = document.createElement('div');
+            dot.className = 'dot';
+            dot.style.left = (e.pageX - 4) + "px";
+            dot.style.top  = (e.pageY - 4) + "px";
+            document.body.appendChild(dot)
+            e.preventDefault()
+        }
+        window.addEventListener('mousedown', e => {
+            window.addEventListener('mousemove', moved)
+        })
+
+        window.addEventListener('mouseup', e => {
+            window.removeEventListener('mousemove', moved)
+        })
+    </script>
+</body>
+
+</html>
