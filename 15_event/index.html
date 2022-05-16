@@ -76,7 +76,7 @@
             }
         })
     </script> -->
-    <style>
+    <!-- <style>
         .dot {
             height: 8px;
             width: 8px;
@@ -99,6 +99,225 @@
 
         window.addEventListener('mouseup', e => {
             window.removeEventListener('mousemove', moved)
+        })
+    </script> -->
+
+    <!-- <style>
+        
+  dot { position: absolute; display: block;
+        border: 2px solid red; border-radius: 50px;
+        height: 100px; width: 100px; }
+    </style>
+
+    <p>Touch this page</p>
+
+    <script>
+  function update( event) {
+    for (let dot; dot = document.querySelector("dot");) {
+      dot.remove();
+    }
+    for (let i = 0; i < event.touches.length; i++) {
+      let {pageX, pageY} = event.touches[i];
+      let dot = document.createElement("dot");
+      dot.style.left = (pageX - 50) + "px";
+      dot.style.top = (pageY - 50) + "px";
+      document.body.appendChild(dot);
+    }
+  }
+        window.addEventListener('touchstart', update)
+        window.addEventListener('touchend', update)
+        window.addEventListener('touchmove', update)
+    </script> -->
+    <!-- <style>
+        #progress {
+          border-bottom: 6px solid blue;
+          width: 0;
+          position: fixed;
+          top: 0; left: 0;
+        }
+      </style>
+      <div id="progress"></div>
+      <script>
+        // Create some content
+        document.body.appendChild(document.createTextNode(
+          "supercalifragilisticexpialidocious ".repeat(1000)));
+        // add a progress bar for reading doc on top.
+        let bar = document.querySelector("#progress");
+        window.addEventListener("scroll", () => {
+          let max = document.body.scrollHeight - innerHeight;
+          bar.style.width = `${(pageYOffset / max) * 100}%`;
+        });
+      </script> -->
+
+    <!-- <p>Name: <input type="text" data-help="Your full name"></p>
+    <p>Age: <input type="text" data-help="Your age in years"></p>
+    <p id="help"></p>
+    <script>
+        let help = document.querySelector('#help');
+        let fields =  document.querySelectorAll('input')
+        for (const field of Array.from(fields)) {
+            console.log(field);
+            field.addEventListener('focus', e => {
+                let text = e.target.getAttribute('data-help');
+                help.textContent = text;
+            })
+            field.addEventListener('blur', e => {
+                // let text = e.target.getAttribute('data-help');
+                help.textContent = '';
+            })
+        }
+    </script> -->
+
+    <!-- <a href="http://google.com">Google</a>
+    <script>
+        window.addEventListener('beforeunload', e => {
+            e.preventDefault()
+            e.returnValue = "Really? Please stay!"
+        })
+        
+    </script> -->
+
+    <!-- Example of using multiple threads! -->
+    <!-- <script>
+        let worker = new Worker('./squareworker.js')
+        worker.addEventListener("message", e => {
+            console.log("Worker response:", e.data);
+        })
+        worker.postMessage(10)
+    </script> -->
+
+    <!-- Delayed response for text input -->
+    <!-- <textarea name="" id="" cols="30" rows="10">Type something here...</textarea>
+    <script>
+        let textarea = document.querySelector('textarea');
+        let timeout;
+        textarea.addEventListener('input', e => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => console.log('Typed!'), 500);
+        })
+    </script> -->
+
+    <!-- Avoid event spam with mousemove -->
+    <!-- <script>
+        let scheduled = null;
+        window.addEventListener('mousemove', e=>{
+            if (!scheduled) {
+                setTimeout(() => {
+                    // Here we reference
+                    // The *current*, scheduled variable
+                    // not the one during creation! 
+                    // Interesing!
+                    document.body.textContent = 
+                    `Mouse at ${scheduled.pageX} ${scheduled.pageY}`;
+                    scheduled = null; 
+                    
+                }, 250);
+            }
+            scheduled = e;
+        })
+    </script> -->
+    <!-- <p>🎈</p>
+
+    <script>
+        // Your code here
+        let p = document.querySelector('p');
+        let size = 20;
+        let isIntact = true;
+        function setFontSize(node, size) {
+            if (isIntact) {
+                node.style.fontSize = size + 'px';
+            }
+            if (size > 100) {
+                isIntact = false;
+                p.textContent = '💥'
+            }
+        }
+
+        setFontSize(p, 11);
+
+
+        let scheduled = null;
+        function balloonPump(e) {
+            if (e.key == "ArrowUp") {
+                if (!scheduled) {
+                    setTimeout(() => {
+                        console.log(p.style.fontSize);
+                        setFontSize(p, size += 10)
+                        scheduled = null;
+                    }, 100)
+                }
+                scheduled = e;
+                e.preventDefault()
+            } else if (e.key == 'ArrowDown') {
+                if (!scheduled) {
+                    setTimeout(() => {
+                        setFontSize(p, size -= 10)
+                        scheduled = null;
+                    }, 100)
+                }
+                scheduled = e;
+                e.preventDefault()
+            }
+        }
+
+        window.addEventListener('keydown', balloonPump)
+
+    </script> -->
+
+    <style>
+        .trail {
+            /* className for the trail elements */
+            position: absolute;
+            height: 6px;
+            width: 6px;
+            border-radius: 3px;
+            background: teal;
+        }
+
+        body {
+            height: 300px;
+        }
+    </style>
+
+    <script>
+        let scheduled = null;
+        // Your code here.
+        let divs = []
+        for (let index = 0; index < 10; index++) {
+            let div = document.createElement('div')
+            div.classList.add('trail')
+            // left:100px;
+            // top: 100px;
+            div.style.top = 100 + 'px';
+            div.style.left = 100 + 'px';
+            document.body.appendChild(div)
+            divs.push(div)
+        }
+
+        function crawlTowards(node, [targetLeft, targetTop], speed) {
+            let [left, top] = [parseInt(node.style.left, 10), 
+                parseInt(node.style.top, 10), ];
+            // console.log(node.style);
+
+            [left, top] = [left + speed * ( targetLeft - left ), 
+                top + speed * ( targetTop - top )]
+            node.style.left = left + 'px'
+            node.style.top = top + 'px'
+        }
+
+        window.addEventListener('mousemove', e => {
+            if (!scheduled) {
+                setTimeout(() => {
+                    // console.log(e.pageX, e.pageY);
+                    let speed = .8;
+                    for (const div of divs) {
+                        crawlTowards(div, [e.pageX, e.pageY], speed)
+                        speed *= 0.8;
+                    }                    
+                    scheduled = null;
+                }, 1000 / 50)
+            }
+            scheduled = e;
         })
     </script>
 </body>
