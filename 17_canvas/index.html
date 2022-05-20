@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <style>
+        html,
+        body {
+            overflow: hidden;
+        }
+    </style>
+    <p>Before canvas.</p>
+    <canvas id="mainCanvas"></canvas>
+    <p>After canvas.</p>
+    <script>
+
+        window.addEventListener('load', e => {
+            let canvas = document.querySelector('canvas')
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let cx = canvas.getContext('2d')
+            // cx.fillStyle = 'red';
+            // cx.fillRect(10, 10, 100, 50)
+            // cx.strokeStyle = 'blue';
+            // cx.strokeRect(10, 10, 100, 50)
+            function range(size, startAt = 0) {
+                return [...Array(size).keys()].map(i => i + startAt);
+            }
+            // for( let y = 10; y < 100; y += 10) {
+            //     cx.moveTo(10, y);
+            //     cx.lineTo(90, y);
+            // }
+            function pol2cart({ r = 1, deg = 0 }) {
+                deg = deg / 180 * Math.PI;
+                return {
+                    x: r * Math.cos(deg),
+                    y: r * Math.sin(deg),
+                }
+            }
+
+            // cx.beginPath(); // spiral
+            // for ( let deg = 0, r = 50; deg < 360 * 5; deg++, r*=.999) {
+            //     let {x,y} = pol2cart({r,deg})
+            //     // [x,y] = [50 + x, 50 + y]
+            //     x += 50
+            //     y += 50
+            //     cx.lineTo(x,y)
+            //     cx.moveTo(x,y)
+            //     console.log(r,deg);
+            // }
+            // cx.stroke()
+
+            // cx = document.querySelector("canvas").getContext("2d");
+            // cx.beginPath();
+            // cx.moveTo(50.1, 10.1);
+            // cx.lineTo(10.1, 70.4);
+            // cx.lineTo(90.3, 70.3);
+            // cx.stroke();
+
+            // cx.beginPath();
+            // cx.moveTo(10, 90)
+            // cx.quadraticCurveTo(90, 90, 30, 10)
+            // cx.closePath();
+            // cx.stroke();
+
+            // cx.beginPath();
+            // for (let r = 40; r > 0; r--) {
+            //     let [a,b] = [Math.PI, 0];
+            //     if (r % 2) { // when odd
+            //         // console.log(`${r} is od`);
+            //         [a,b] = [- Math.PI / 2, Math.PI / 2 ]
+            //     }
+            //     // console.log(r % 2 == true);
+
+            //     cx.arc(100, 50, r, a,b)
+            // }
+            // cx.stroke()
+
+            // const results = [
+            //     { name: "Satisfied", count: 1043, color: "lightblue" },
+            //     { name: "Neutral", count: 563, color: "lightgreen" },
+            //     { name: "Unsatisfied", count: 510, color: "pink" },
+            //     { name: "No comment", count: 175, color: "silver" }
+            // ];
+            // let total = results.reduce((acc, {count}) => acc + count, 0)
+            // let lastDeg = 0;
+            // console.log(total);
+            // for (const { name, count, color } of results) {
+            //     cx.beginPath()
+            //     console.log(name);
+            //     let deg = (count / total) * 2 * Math.PI;
+            //     cx.arc(100, 100, 100, lastDeg, lastDeg + deg);
+            //     lastDeg += deg;
+            //     cx.lineTo(100, 100) // Reset to center
+            //     cx.fillStyle = color;
+            //     cx.fill()
+            // }
+
+            // let img = document.createElement('img')
+            // img.src = 'https://static.wikia.nocookie.net/starwars/images/0/02/Jar_Jar_SWSB.png'
+            // img.addEventListener('load', () => {
+            //     for (let x = 900; x > 0; x -= 5) {
+            //         let y = Math.sin(x / 10) * 40
+            //         cx.drawImage(img, x, 10 + y)
+            //     }
+            // })
+
+
+
+            // let cx = document.querySelector("canvas").getContext("2d");
+            // let img = document.createElement("img");
+            // img.src = "player_big.png";
+            // let spriteW = 24 * 2, spriteH = 30 * 2;
+            // function flipHorizontally(context, around) {
+            //     context.translate(around, 0);
+            //     context.scale(-1, 1);
+            //     context.translate(-around, 0);
+            // }
+
+            // img.addEventListener("load", () => {
+            //     let cycle = 0;
+            //     setInterval(() => {
+
+            //         flipHorizontally(cx, 100 + spriteW / 2);
+            //         cx.clearRect(0, 0, spriteW, spriteH);
+            //         cx.drawImage(img,
+            //             // source rectangle
+            //             cycle * spriteW, 0, spriteW, spriteH,
+            //             // destination rectangle
+            //             0, 0, spriteW, spriteH);
+            //         cycle = (cycle + 1) % 8;
+            //     }, 120);
+            // });
+
+            // function branch(length, angle, scale) {
+            //     cx.fillRect(0, 0, 1, length);
+            //     if (length < 8) return;
+            //     cx.save();
+            //     cx.translate(0, length);
+            //     cx.rotate(-angle);
+            //     branch(length * scale, angle, scale);
+            //     cx.rotate(2 * angle);
+            //     branch(length * scale, angle, scale);
+            //     cx.restore();
+            // }
+            // cx.translate(300, 0);
+            // branch(60, 0.5, 0.8);
+
+            const pt = (x,y) => {
+                return {x,y}
+            }
+
+            const pi = Math.PI;
+            let r = 50;
+            let x_center = 100, y_center = 100;
+            cx.moveTo(x_center, y_center)
+            for (const angle of [0, (1./3)*(2*pi), (2./3)*(2*pi)]) {
+                x = r*Math.cos(angle) + x_center
+                y = r*Math.sin(angle) + y_center;
+                cx.lineTo(x,y)
+            }
+
+            // for ( let i = 0; i < 100; i++) {
+
+            // }
+            
+            cx.fill()
+        })
+    </script>
+</body>
+
+</html>

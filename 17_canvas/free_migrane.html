@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <style>
+        svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+
+    <svg xmlns="http://www.w3.org/2000/svg">
+    </svg>
+    <script>
+            let svg = document.querySelector('svg')
+
+            
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            function make_circles() {
+
+                let circle = document.createElementNS("http://www.w3.org/2000/svg", 'circle')
+                let r = Math.min($(window).width(), $(window).height() ) / 2
+                $(circle).attr({
+                    r: r,
+                    cx: $(window).width() / 2,
+                    cy: $(window).height() / 2,
+                    fill: getRandomColor(),
+                })
+
+                let circles = [circle,]
+                for (let i = 0; i < circle.getAttribute('r'); i+=2) {
+                    // console.log(i);
+                    let c = circle.cloneNode();
+                    // c.setAttribute('r', circle.getAttribute('r') - i)
+                    // c.setAttribute('fill', getRandomColor())
+                    $(c).attr({
+                        r: $(circle).attr('r') - i,
+                        fill: getRandomColor(),
+                    })
+                    circles.push(c)
+                }
+                return circles;
+            }
+
+            function update_cicles(att, val) {
+                for (const c of globalThis.circles) {
+                    c.setAttribute(att, val())
+                }
+            }
+
+            globalThis.circles = []
+
+            function draw() {
+                globalThis.circles = make_circles();
+                for (const circle of circles) {
+                    svg.append(circle)
+                }
+            }
+
+            window.addEventListener('mousemove', e => {
+                update_cicles('fill', getRandomColor)
+                // console.log(globalThis.circles);
+            })
+
+            window.addEventListener('resize', e => {
+                svg.replaceChildren();
+                draw()
+            })
+
+            draw()
+
+    </script>
+</body>
+
+</html>
