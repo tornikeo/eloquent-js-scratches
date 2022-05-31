@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+    <!-- <form method="GET" action="example/message.html">
+        <p>Name: <input type="text" name="name"></p>
+        <p>Message:<br><textarea name="message"></textarea></p>
+        <p><button type="submit">Send</button></p>
+    </form> -->
+    <!-- <input type="text" tabindex=1> <a href=".">(help)</a>
+    <button onclick="console.log('ok')" tabindex=2>OK</button> -->
+    <!-- <form action="example/submit.html">
+        Name: <input type="text" name="name"><br>
+        Password: <input type="password" name="password"><br>
+        <button type="submit">Log in</button>
+    </form> -->
+
+    <!-- <textarea></textarea> -->
+    <!-- <input type="text"> length: <span id="length">0</span> -->
+    <!-- <input type="file" > -->
+
+    Notes: <select></select> <button>Add</button><br>
+    <textarea style="width: 100%"></textarea>
+
+    <script>
+        // encodeURIComponent -> used for uri symbol
+        // encoding, like: '?' -> '%3F'
+
+        // console.log(encodeURIComponent('Hello?'));
+        // console.log(decodeURIComponent('Hello%3F'));
+
+        // fetch("../17_canvas/index.html")
+        //     .then(r => {
+        //         console.log(r.status);
+        //         console.log(r.headers.get("Content-Type"));
+        //         return r.text();
+        //     })
+        //     .then(t => {
+        //         console.log(t);
+        //     })
+        // fetch("../17_canvas/index.html", {method: "DELETE"})
+        //     .then(r => {
+        //         console.log(r.status);
+        //     })
+        //     .catch(e => {
+        //         console.log(e);
+        //     })
+        // fetch("../17_canvas/index.html", {headers: {Range: "bytes=8-19"}})
+        //     .then(r => r.text())
+        //     .then(console.log)
+        // For this reason, browsers protect us by disallowing scripts to make HTTP requests to other
+        // e.g this:
+        // fetch('https://eloquentjavascript.net/18_http.html')
+        // CORS error
+        // Instead, we can either disable that browser restriction
+        // Or, have the server provide this header:
+        /// Access-Control-Allow-Origin: *
+
+        // let form = document.querySelector('form')
+        // for (const el of form.elements) {  
+        //     console.log(el);
+        // }
+        // form.addEventListener('submit', e => {
+        //     console.log("Saving value", 
+        //         form.elements.name.value);
+        //     e.preventDefault();
+        // })
+
+        // let textarea = document.querySelector('textarea');
+        // textarea.addEventListener('keydown', e => {
+        //     if (e.keyCode == 113) {
+        //         // textarea.value += "3003S"
+        //         replaceSelection(textarea, '30035')
+        //         event.preventDefault();
+        //     }
+        // });
+
+
+        // function replaceSelection(field, word) {
+        //     let from = field.selectionStart, to = field.selectionEnd;
+        //     field.value = field.value.slice(0, from) + word +
+        //         field.value.slice(to);
+        //     // Put the cursor after the word
+        //     field.selectionStart = from + word.length;
+        //     field.selectionEnd = from + word.length;
+        // }
+        // let text = document.querySelector('input')
+        // let output = document.querySelector('#length');
+        // text.addEventListener('input', e => {
+        //     output.textContent = text.value.length;
+        // })
+
+        // let input = document.querySelector('input')
+        // input.addEventListener('change', e => {
+        //     // if (input.files.length > 0) {
+        //     //     let file = input.files[0]; // Might also have multiple if has an attr
+        //     //     console.log('You chose', file.name);
+        //     //     if (file.type) {
+        //     //         console.log("It has type", file.type);
+        //     //     }
+        //     // }
+        //     for (const file of Array.from(input.files)) {
+        //         let reader = new FileReader();
+        //         reader.addEventListener('load', e => {
+        //             console.log("File", file.name, "starts with",
+        //                         reader.result.slice(0, 20));
+        //         })
+        //         reader.readAsText(file);
+        //     }
+        // })
+        // localStorage.setItem('username','tornikeo')
+        // console.log(localStorage.getItem('username'));
+        // localStorage.removeItem('username')
+
+        /// Note taking app
+        // let list = document.querySelector("select");
+        // let note = document.querySelector("textarea");
+
+        // let state;
+        // function setState(newState) {
+        //     list.textContent = "";
+        //     for (let name of Object.keys(newState.notes)) {
+        //         let option = document.createElement("option");
+        //         option.textContent = name;
+        //         if (newState.selected == name) option.selected = true;
+        //         list.appendChild(option);
+        //     }
+        //     note.value = newState.notes[newState.selected];
+
+        //     localStorage.setItem("Notes", JSON.stringify(newState));
+        //     state = newState;
+        // }
+        // setState(JSON.parse(localStorage.getItem("Notes")) || {
+        //     notes: { "shopping list": "Carrots\nRaisins" },
+        //     selected: "shopping list"
+        // });
+
+        // list.addEventListener("change", () => {
+        //     setState({ notes: state.notes, selected: list.value });
+        // });
+        // note.addEventListener("change", () => {
+        //     setState({
+        //         notes: Object.assign({}, state.notes,
+        //             { [state.selected]: note.value }),
+        //         selected: state.selected
+        //     });
+        // });
+        // document.querySelector("button")
+        //     .addEventListener("click", () => {
+        //         let name = prompt("Note name");
+        //         if (name) setState({
+        //             notes: Object.assign({}, state.notes, { [name]: "" }),
+        //             selected: name
+        //         });
+        //     });
+
+        /// There is also session storage, lives until
+        /// brower is closed.
+
+    </script>
+</body>
+
+</html>

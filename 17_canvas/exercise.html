@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+
+    <canvas width="500" height="500">
+
+    </canvas>
+    <script>
+        let canv = document.querySelector('canvas');
+        let ctx = canv.getContext('2d');
+
+        // console.log(canv);
+
+        // ctx.beginPath();
+        // // ctx.moveTo(75, 50);
+        // // ctx.lineTo(100, 75);
+        // // ctx.lineTo(100, 25);
+        // ctx.moveTo(50,50);
+        // ctx.lineTo(70,50);
+
+        // ctx.moveTo(70,50);
+        // ctx.lineTo(90,70);
+
+        // ctx.moveTo(90,70);
+        // ctx.lineTo(30,70);
+
+        // ctx.moveTo(30,70)
+        // ctx.lineTo(50,50)
+        // ctx.stroke();
+
+        // ctx.save();
+        // ctx.fillStyle = 'red'
+        // ctx.translate(50,50)
+        // ctx.rotate(Math.PI / 4)
+
+        // ctx.fillRect(0,0,40,40)
+
+        // ctx.translate(0,0)
+        // ctx.restore();
+        // for (let i = 0; i < 10; i++) {
+        //     ctx.save()
+        //     ctx.translate(50,50 + 40 * i)
+        //     ctx.beginPath()
+        //     ctx.moveTo(50,50);
+        //     ctx.lineTo(200,70);
+
+        //     ctx.moveTo(200,70);
+        //     ctx.lineTo(50,90);
+        //     ctx.stroke()
+        //     ctx.restore()   
+        // }
+
+        const toXY = ({r, theta}) => {
+            return {
+                x: r * Math.cos(theta),
+                y: r * Math.sin(theta)
+            }
+        }
+        // ctx.save();
+        // ctx.translate(100,100)
+        // for (let i = 0; i < 360 * 4; i++) {
+        //     let r = (i / 360) * 10;
+        //     let theta = Math.PI * (i / 180);
+        //     let { x, y } = toXY(r, theta);
+        //     // ctx.moveTo(x,y)
+        //     ctx.fillRect(x,y,1,1)
+
+        // }
+
+        // ctx.restore()
+
+
+    </script>
+</body>
+
+</html>
