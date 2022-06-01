@@ -6,6 +6,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Page Title</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -26,10 +27,108 @@
     <!-- <input type="text"> length: <span id="length">0</span> -->
     <!-- <input type="file" > -->
 
-    Notes: <select></select> <button>Add</button><br>
-    <textarea style="width: 100%"></textarea>
+    <!-- Notes: <select></select> <button>Add</button><br>
+    <textarea style="width: 100%"></textarea> -->
+    <!-- <textarea id="code">return "hi";</textarea>
+    <button id="button">Run</button>
+    <pre id="output"></pre> -->
 
+    <div id="grid"></div>
+    <button id="next">Next generation</button>
     <script>
+
+        function redrawGrid(state) {
+            let table = $('<table>');
+            for (let i = 0; i < state.length; i++) {
+                let row = $('<tr>')
+                for (let j = 0; j < state[0].length; j++) {
+                    row.append(
+                        $('<td>').append(
+                            $('<input>', {
+                                type: "checkbox",
+                                checked: state[i][j] === 1,
+                            }).on('change', e => {
+                                state[i][j] = Number(e.currentTarget.checked);
+                            })
+                        )
+                    )
+                }
+                table.append(row)
+            }
+            $('#grid').empty().append(
+                table
+            )
+        }
+        function makeArray(a, b) {
+            var arr = new Array(a)
+            for (var i = 0; i < a; i++)
+                arr[i] = new Array(b).fill(0)
+            return arr
+        }
+
+        let state = makeArray(100,100);
+        state = state.map(
+            row => row.map(
+                elem => (Math.random() >= .5) ? 0 : 1
+            )
+        )
+        // new Array(20).fill(1).map(x => (Math.random() >= .5) ? 1 : 0)
+        console.log(state);
+        redrawGrid(state);
+        function sumNeighbors(state, x, y) {
+            let sum = 0
+            // if ( x == 0 && y == 0) {debugger}
+            for( let i = -1; i <= 1; i++) {
+                for( let j = -1; j <= 1; j++) {
+                    if ( !(i === j && j === 0)) {
+                        try {
+                            let v = state[x + i][y + j];
+                            if (!isNaN(v)) {
+                                sum += v;
+                            }
+                        } catch ( error ) {
+                            // console.log(error, i, j, x, y);
+                        }
+                    }
+                }
+            }
+            return sum;
+        }
+        function update(state) {
+            state = state.map(
+                (row, i) => row.map(
+                    (elem, j) => {
+                        let neighSum = sumNeighbors(state, i, j);
+                        // console.log(neighSum);
+                        if (elem == 1) {
+                            if (neighSum < 2 || neighSum > 3) {
+                                return 0;
+                            }
+                        } else {
+                            if (neighSum == 3) {
+                                return 1;
+                            }
+                        }
+                        return elem;
+                    }
+                )
+            )   
+            return state
+        }
+        // let nextGenBtn = document.querySelector('#next');
+        $('#next').on('click', e => {
+                // console.log(e);
+                $(function () {
+                    setInterval(() => {
+                        state = update(state)
+                        redrawGrid(state)
+                    }, 250)
+                })
+                // state = update(state)
+                // redrawGrid(state)
+            })
+
+        
         // encodeURIComponent -> used for uri symbol
         // encoding, like: '?' -> '%3F'
 
@@ -64,11 +163,11 @@
         /// Access-Control-Allow-Origin: *
 
         // let form = document.querySelector('form')
-        // for (const el of form.elements) {  
+        // for (const el of form.elements) {
         //     console.log(el);
         // }
         // form.addEventListener('submit', e => {
-        //     console.log("Saving value", 
+        //     console.log("Saving value",
         //         form.elements.name.value);
         //     e.preventDefault();
         // })
@@ -164,6 +263,28 @@
         /// There is also session storage, lives until
         /// brower is closed.
 
+        // exercises!
+        // content negotiation
+        // let url = 'https://eloquentjavascript.net/author';
+        // fetch(url, {
+        //     headers: { 'Accept': 'application/rainbows+unicorns' }
+        // })
+        // .then(r => r.text())
+        // .then(t => {
+        //     console.log(t);
+        // })
+
+        // let run = document.querySelector('#button');
+        // let codeArea = document.querySelector('#code')
+        // let outputArea = document.querySelector('#output')
+        // run.addEventListener('click', e => {
+        //     let toExecute = new Function('',codeArea.value);
+        //     let result = toExecute();
+        //     console.log(result);
+        //     outputArea.innerHTML = result;
+        //     // console.log(e);
+        //     e.preventDefault()
+        // })
     </script>
 </body>
 
